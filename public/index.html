@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="style/mystyle.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- jquery link -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+  <script>
+
+function chkDibbaA()
+            {
+                let ref=document.querySelector("#txtEmail");
+                var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+                if(pattern.test(ref.value)==true)
+                    {
+                        document.getElementById("txtEmail").style.borderColor="lightgreen";
+                    }
+                    else if( isNaN(ref.value)==true)
+                        {
+                            document.getElementById("txtEmail").style.borderColor="red";
+
+                        }
+                        else
+                        {
+                            document.getElementById("txtEmail").style.borderColor="black";
+                        }
+            }
+            function chkDibbaAl()
+            {
+                let ref=document.querySelector("#txtEmaill");
+                var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+                if(pattern.test(ref.value)==true)
+                    {
+                        document.getElementById("txtEmaill").style.borderColor="lightgreen";
+                    }
+                    else if( isNaN(ref.value)==true)
+                        {
+                            document.getElementById("txtEmaill").style.borderColor="red";
+
+                        }
+                        else
+                        {
+                            document.getElementById("txtEmaill").style.borderColor="black";
+                        }
+            }
+            function chkDibbaB()
+            {
+              var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
+                let ref=document.querySelector("#pwd");
+                if(regularExpression.test(ref.value)==true)
+                    {
+                        document.getElementById("pwd").style.borderColor="lightgreen";
+                    }
+                    else if( isNaN(ref.value)==true)
+                        {
+                            document.getElementById("pwd").style.borderColor="red";
+
+                        }
+                        else
+                        {
+                            document.getElementById("pwd").style.borderColor="black";
+                        }
+            }
+            function chkDibbaBl()
+            {
+              var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
+                let ref=document.querySelector("#txtPwd");
+                if(regularExpression.test(ref.value)==true)
+                    {
+                        document.getElementById("txtPwd").style.borderColor="lightgreen";
+                    }
+                    else if( isNaN(ref.value)==true)
+                        {
+                            document.getElementById("txtPwd").style.borderColor="red";
+
+                        }
+                        else
+                        {
+                            document.getElementById("txtPwd").style.borderColor="black";
+                        }
+            }
+    $(document).ready(function()
+    {
+        // $(document).ajaxStart(function(){
+        //         $("#bg").css("display","block");
+        //         $("#wait").css("display","block");
+        //     })
+        //     $(document).ajaxStop(function(){
+        //         $("#wait").css("display","none");
+        //         $("#bg").css("display","none");
+        //     })
+    $("#sgnup").click(function(){
+        //alert("obj");
+       {
+        let obj={
+            type:"get",
+            url:"/signup-process",
+            data:{
+                txtEmail:$("#txtEmail").val(),
+                pwd:$("#pwd").val(),
+                combo:$("#combo").val()
+            }
+        }
+        $.ajax(obj).done(function(resp){
+          $("#status").html("signed up successfully")
+
+        }).fail(function(err)
+        {
+            alert(err.statusText);
+        })
+      }   
+    })
+
+    $("#login").click(function(){
+
+        let obj={
+            type:"get",
+            url:"/login-process",
+            data:{
+                txtEmaill:$("#txtEmaill").val(),
+                txtPwd:$("#txtPwd").val(),
+              
+            }
+        }
+    //     let obj2={
+    //         type:"get",
+    //         url:"/infl-desh",
+    //         data:{
+    //             txtEmaill:$("#txtEmaill").val(),
+    //             txtPwd:$("#txtPwd").val(),
+    //     }
+    // }
+        $.ajax(obj).done(function(resp){
+            if(resp==="Influencer")
+        {
+            location.href="infl-desh.html";
+            localStorage.setItem("activeuser",$("#txtEmaill").val());
+
+        }
+            else if(resp==="Client")
+        {
+            location.href="cl-dash.html";
+            localStorage.setItem("activeuser",$("#txtEmaill").val());
+        }
+            else
+            alert(resp);
+        }).fail(function(err)
+        {
+            alert(err.statusText);
+        })
+        // $.ajax(obj2).done(function(resp){
+        
+        // }).fail(function(err)
+        // {
+        //     alert(err.statusText);
+        // })
+        
+        
+    })
+
+    $("#forgot").click(function(){
+        let obj={
+            type:"post",
+            url:"/mail-send",
+            data:{
+                txtEmaill:$("#txtEmaill").val(),
+            }
+        }
+        $.ajax(obj).done(function(resp){
+            alert("Password has been sent");
+
+        }).fail(function(err)
+        {
+            alert(err.statusText);
+        })
+       
+    })
+    })
+
+
+  </script>
+  <!-- <style>
+    #wait{
+            position: absolute;
+            width: 100px; height:100px;
+            background-image: url(pics/Ellipsis@1x-1.0s-200px-200px.gif);
+            background-size: contain;
+            top: 30%;
+            left: 40%;
+            border: 1px black solid;
+            display: none;
+    }
+    #bg{
+            width: 100%;    height: 100%;  
+            background-color: gainsboro;
+            display: none;
+            position: absolute;
+            opacity: .5;
+    }
+  </style> -->
+</head>
+
+<body style="background-color: black;">
+
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+
+
+        <div class="container-fluid" >
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <img src="uploads/ic-high-resolution-logo-transparent.png" height="40" width="60"><a class="navbar-brand"> I&C.com</a>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-item nav-link active" href="#">Our Services</a>
+              <a class="nav-item nav-link" href="#">Our Team</a>
+              <a class="nav-item nav-link" href="#">Reach Us</a>
+            </div>
+          </div>
+            <form class="d-flex" role="search">
+                <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
+                <button class="btn btn-outline-success" type="button" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" >Signup</button>
+                <button class="btn btn-outline-success" type="button" style="margin-left:10px" 
+                data-bs-target="#exampleModallog"  data-bs-toggle="modal" >Login</button>&nbsp;&nbsp;
+            </form>
+        </div>
+    </nav>
+<br>
+    <section>
+      <div class="container">
+          <div class="carousel">
+              <input type="radio" name="slides" checked="checked" id="slide-1">
+              <input type="radio" name="slides" id="slide-2">
+              <input type="radio" name="slides" id="slide-3">
+              <input type="radio" name="slides" id="slide-4">
+              <input type="radio" name="slides" id="slide-5">
+              <input type="radio" name="slides" id="slide-6">
+              <ul class="carousel__slides">
+                  <li class="carousel__slide">
+                      <figure>
+                          <div>
+                              <img src="uploads/sl-2.jpg" alt="">
+                          </div>
+                          
+                      </figure>
+                  </li>
+                  <li class="carousel__slide">
+                      <figure>
+                          <div>
+                              <img src="uploads/sl-1.webp" alt="">
+                          </div>
+                          
+                      </figure>
+                  </li>
+                  <li class="carousel__slide">
+                      <figure>
+                          <div>
+                              <img src="uploads/sl-3.jpg" alt="">
+                          </div>
+                          
+                      </figure>
+                  </li>
+                  <li class="carousel__slide">
+                      <figure>
+                          <div>
+                              <img src="uploads/sl-4.jpg" alt="">
+                          </div>
+                          
+                      </figure>
+                  </li>
+                  <li class="carousel__slide">
+                      <figure>
+                          <div>
+                              <img src="uploads/sl-5.jpg" alt="">
+                          </div>
+                      </figure>
+                  </li>
+                  <li class="carousel__slide">
+                      <figure>
+                          <div>
+                              <img src="uploads/sl-6.jpg" alt="">
+                          </div>
+                      </figure>
+                  </li>
+              </ul>    
+              <ul class="carousel__thumbnails">
+                  <li>
+                      <label for="slide-1"><img src="uploads/sl-2.jpg" alt=""></label>
+                  </li>
+                  <li>
+                      <label for="slide-2"><img src="uploads/sl-1.webp" alt=""></label>
+                  </li>
+                  <li>
+                      <label for="slide-3"><img src="uploads/sl-3.jpg" alt=""></label>
+                  </li>
+                  <li>
+                      <label for="slide-4"><img src="uploads/sl-4.jpg" alt=""></label>
+                  </li>
+                  <li>
+                      <label for="slide-5"><img src="uploads/sl-5.jpg" alt=""></label>
+                  </li>
+                  <li>
+                      <label for="slide-6"><img src="uploads/sl-6.jpg" alt=""></label>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </section>
+      <div class="row  text-black fs-3" style="background-color: black;">
+        <center><font style="color: white; font-style: italic;">Our Services</font></center>
+      </div>
+      <div class="row">
+        <div class="container1 col-md-3" style="background-color: black;">
+          <div class="cta">
+       <img src="uploads/collab.jpeg" class="card-img-top" alt="..."  width="300" height="260"/>
+             <div class="text">
+                <h2>Collaborator</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit accusamus temporibus voluptates exercitationem, ipsa officiis a animi esse explicabo repudiandae .</p>
+             </div>
+          </div>
+       </div>
+       <div class="container1 col-md-3">
+        <div class="cta">
+     <img src="uploads/meet.jpeg" class="card-img-top" alt="..."  width="300" height="260"/>
+           <div class="text">
+              <h2>Meet & Greet</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit accusamus temporibus voluptates exercitationem, ipsa officiis a animi esse explicabo repudiandae in, blanditiis cum quam magni? Voluptates illum earum praesentium veniam.</p>
+           </div>
+        </div>
+     </div>
+     <div class="container1 col-md-3">
+      <div class="cta">
+   <img src="uploads/find.jpeg" class="card-img-top" alt="..." width="300" height="260" />
+         <div class="text">
+            <h2>Find influencers</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit accusamus temporibus voluptates exercitationem, ipsa officiis a animi esse explicabo repudiandae in, blanditiis cum quam magni? Voluptates illum earum praesentium veniam.</p>
+         </div>
+      </div>
+   </div>
+   <div class="container1 col-md-3">
+    <div class="cta">
+ <img src="uploads/promot.jpeg" class="card-img-top" alt="..." width="300" height="260" />
+       <div class="text">
+          <h2>Promotion</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit accusamus temporibus voluptates exercitationem, ipsa officiis a animi esse explicabo repudiandae in, blanditiis cum quam magni? Voluptates illum earum praesentium veniam.</p>
+       </div>
+    </div>
+ </div
+      </div>
+    <div class="row bg-black text-white fs-3" >
+        <center> <font style="font-style: italic;">Our Team</font></center>
+      </div>
+      <div class="row">
+        
+    <!--Profile Card 4-->
+    <div class="col-md-4 mt-4" style="margin-left: 12%;margin-right: 4%;" >
+      <div class="card profile-card-4">
+         <div class="card-img-block">
+            <div class="info-box">Author of "Real Java" and Mentor of DSA,NODE JS,JAVA and C++.</div>
+            <img class="img-fluid" src="https://images.unsplash.com/photo-1458668383970-8ddd3927deed?dpr=1&auto=format&crop=entropy&fit=crop&w=1500&h=1004&q=80" alt="Card image cap">
+         </div>
+         <div class="card-body pt-5">
+            <img src="uploads/sir.PNG" alt="profile-image" class="profile" />
+            <h5 class="card-title text-center">Mr. Rajesh Bansal</h5>
+            <p class="card-text text-center">Mentor</p>
+            <div class="icon-block text-center"><a href="#"><i class="fa fa-facebook"></i></a><a href="#">
+                  <i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-instagram"></i></a>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-md-4 mt-4" style="margin-left: 4%;margin-right: 12%;" >
+    <div class="card profile-card-4">
+       <div class="card-img-block">
+          <div class="info-box">done under the guidance of Mr.Rajesh Bansal</div>
+          <img class="img-fluid" src="uploads/sajal bg.jpg" alt="Card image cap">
+       </div>
+       <div class="card-body pt-5">
+          <img src="uploads/beluga_the.cat-Instagram.Com-3-735x727.png" alt="profile-image" class="profile" />
+          <h5 class="card-title text-center">Sajal Sowna</h5>
+          <p class="card-text text-center">Developer</p>
+          <div class="icon-block text-center"><a href="#"><i class="fa fa-facebook"></i></a><a href="#">
+                <i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-instagram"></i></a>
+          </div>
+       </div>
+    </div>
+ </div>
+<div class="row bg-black text-white fs-3">
+    <center <font style="font-style: italic;">Reach Us</font></center>
+  </div>
+  <center>
+<div>
+    <iframe
+    <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d864.5409518653616!2d73.86818626959312!3d29.91718599843676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjnCsDU1JzAxLjkiTiA3M8KwNTInMDcuOCJF!5e0!3m2!1sen!2sin!4v1721085071245!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+
+</center>
+<div  class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-ku">
+    <div class="modal-content">
+    <div class=" h-100 modal-ku">
+      <div class="row d-flex align-items-center h-100">
+        <div class="col-xl-10">
+          <div class="card rounded-3 text-black">
+            <div class="row g-0">
+              <div class="col-lg-6">
+                <div class="card-body p-md-5 mx-md-4">
+  
+                  <div class="text-center">
+                    <img src="uploads/ic-high-resolution-logo-transparent.png"
+                      style="width: 185px;" alt="logo">
+                    <h4 class="mt-1 mb-4 pb-1">Welcome to I&C</h4>
+                  </div>
+               <p>Signup to your new account</p>
+                  <form>
+                    <div data-mdb-input-init class="form-outline mb-4">
+                      <input type="email" id="txtEmail" class="form-control"
+                         autofocus onblur="chkDibbaA();" required />
+                      <label class="form-label" for="form2Example11">Email</label>
+                    </div>
+  
+                    <div data-mdb-input-init class="form-outline mb-4">
+                      <input type="password" id="pwd" class="form-control" autofocus onblur="chkDibbaB();" required/>
+                      <label class="form-label" for="form2Example22">Password</label>
+                    </div>
+                    <select class="form-select mb-4" aria-label="Default select example" id="combo" name="combo" required>
+                      <option selected  >Select your category</option>
+                      <option value="Client" >Client</option>
+                      <option value="Influencer" name="infl" id="infl">Influencer</option>
+                      
+                    </select>
+                    <br>
+                    <div class="text-center pt-1 mb-3 pb-1">
+                      
+                      <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button" id="sgnup">sign up
+                      </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                      <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button" data-bs-dismiss="modal">Close
+                      </button>
+                    </div>
+                    <div class="text-center ">
+                            <span id="status">*</span>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center pb-4">
+                      <p class="mb-0 me-2">Already have an account?</p>
+                      <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger" data-bs-toggle="modal"  data-bs-target="#exampleModallog">Log in</button>
+                    </div>
+                  </form>
+  
+                </div>
+              </div>
+              <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                  <h4 class="mb-4">connect to our new world</h4>
+                  <p class="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+</div>
+
+    <!-- Modal Login -->
+       
+    <div class="modal fade" id="exampleModallog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-ku">
+        <div class="modal-content">
+        <div class=" h-100 modal-ku">
+          <div class="row d-flex align-items-center h-100">
+            <div class="col-xl-10">
+              <div class="card rounded-3 text-black">
+                <div class="row g-0">
+                  <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                    <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                      <h4 class="mb-4">login to find Influencers</h4>
+                      <p class="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="card-body p-md-5 mx-md-4">
+      
+                      <div class="text-center">
+                        <img src="uploads/ic-high-resolution-logo-transparent.png"
+                          style="width: 185px;" alt="logo">
+                        <h4 class="mt-1 mb-4 pb-1">Welcome to I&C</h4>
+                      </div>
+                   <p>Login to your account</p>
+                      <form>
+                        <div data-mdb-input-init class="form-outline mb-3">
+                          <input type="email" id="txtEmaill" class="form-control"
+                             autofocus onblur="chkDibbaAl();"/>
+                          <label class="form-label" for="form2Example11">Email</label>
+                        </div>
+      
+                        <div data-mdb-input-init class="form-outline mb-3">
+                          <input type="password" id="txtPwd" class="form-control" autofocus onblur="chkDibbaBl();"/>
+                          <label class="form-label" for="form2Example22">Password</label>
+                        </div>
+                        <div class="text-center pt-1 mb-5 pb-1">
+                          <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button" id="login">Log
+                            in</button>&nbsp;&nbsp;
+                            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button" data-bs-dismiss="modal">close
+                              </button><br>
+                          <a class="text-muted" id="forgot" >Forgot password?</a>
+                        </div>
+      
+                        <div class="d-flex align-items-center justify-content-center pb-4">
+                          <p class="mb-0 me-2">Don't have an account?</p>
+                          <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger" data-bs-toggle="modal"  data-bs-target="#exampleModal">Create new</button>
+                        </div>
+      
+                      </form>
+      
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</body>
+
+</html>
