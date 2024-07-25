@@ -185,6 +185,20 @@ function chkDibbaA()
         })
        
     })
+
+    $("#admin").click(function(){
+        let obj={
+            type:"get",
+            url:"/admin",
+        }
+        $.ajax(obj).done(function(resp){
+        }).fail(function(err)
+        {
+            alert(err.statusText);
+        })
+       
+    })
+
     })
 
 
@@ -234,7 +248,7 @@ function chkDibbaA()
                 <button class="btn btn-outline-success" type="button" style="margin-left:10px" 
                 data-bs-target="#exampleModallog"  data-bs-toggle="modal" >Login</button>&nbsp;&nbsp;
                 <button class="btn btn-outline-success" type="button" 
-                    formaction="Admin-dash.html" >ADMIN</button>
+                    id="admin" >ADMIN</button>
             </form>
         </div>
     </nav>
