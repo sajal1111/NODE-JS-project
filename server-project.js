@@ -144,13 +144,19 @@ app.post("/cprofile-modify",function(req,resp){
         }
     })
 })
-app.post("/profile-update",function(req,resp){
+app.post("/profile-update",async function(req,resp){
     
     let fileName="";
     if(req.files!=null){
         fileName=req.files.ppic.name;
         let path=__dirname+"/public/uploads/"+fileName;
         req.files.ppic.mv(path);
+
+        await cloudinary.uploader.upload(path)
+        .then( function(result)
+    {
+         fileName=result.url;
+    })
     }
     else{
         fileName=req.body.hdn;
