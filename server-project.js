@@ -3,7 +3,7 @@ var mysql = require("mysql2");
 var fileuploader = require("express-fileupload");
 const nodemailer=require("nodemailer");
 let app = express();
-
+var cloudinary=require('cloudinary').v2;
 app.listen(2022, function () {
     console.log("Server Started :)");
 })
@@ -36,6 +36,11 @@ let config = {
     keepAliveInitialDelay : 10000,
     enableKeepAlive : true
 }
+cloudinary.config({ 
+    cloud_name: 'dwicpqqtb', 
+    api_key: '593647836699493', 
+    api_secret: '90m17JuxMw-SUq212f69lgKElJk' // Click 'View Credentials' below to copy your API secret
+});
 var mysql = mysql.createConnection(config);
 mysql.connect(function (err) {
     if (err == null)
@@ -88,7 +93,7 @@ app.get("/login-process", function (req, resp) {
     })
 
 })
-app.post("/profile-save",function(req,resp)
+app.post("/profile-save",async function(req,resp)
 {
     let filename="";
     if(req.files.ppic!=null)
@@ -96,6 +101,11 @@ app.post("/profile-save",function(req,resp)
         filename=req.files.ppic.name;
         let path=__dirname + "/public/uploads/" + filename;
         req.files.ppic.mv(path);
+        await cloudinary.uploader.upload(path)
+        .then(function(result)
+    {
+         filename=result.url;
+    })
     }
     else {
         filename = "nopic.jpg";
