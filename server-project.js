@@ -144,7 +144,7 @@ app.post("/cprofile-modify",function(req,resp){
         }
     })
 })
-app.post("/profile-update",async function(req,resp){
+app.post("/profile-update",function(req,resp){
     
     let fileName="";
     if(req.files!=null){
@@ -152,7 +152,7 @@ app.post("/profile-update",async function(req,resp){
         let path=__dirname+"/public/uploads/"+fileName;
         req.files.ppic.mv(path);
 
-        await cloudinary.uploader.upload(path)
+        cloudinary.uploader.upload(path)
         .then( function(result)
     {
          fileName=result.url;
